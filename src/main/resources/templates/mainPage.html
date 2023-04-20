@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+    <title>재고관리 시스템</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <table style="width: 100%;">
+            <tr>
+                <th>
+                    <a th:href="@{/home}" style="font-size: 2rem;">재고관리 시스템</a>
+                </th>
+                <th>
+                    <a th:href="@{/objects}" style="font-size: 2rem;">물품 관리</a>
+                </th>
+                <th>
+                    <a th:href="@{/categories}" style="font-size: 2rem;">카테고리 관리</a>
+                </th>
+                
+            </tr>
+        </table>    
+        
+    </nav>
+    
+    <div th:each="category : ${category}">
+        <p style="font-size: 2rem;" th:text="${category}"></p>
+        <table>
+            <tr>
+            <th>이름</th>
+            <th>개수</th>
+            <th>최근 수정일</th>
+            <th>수량변경</th>
+            <th>삭제</th>
+            </tr>
+
+            <tr th:each="object : ${objects}" th:switch="${object.category}">
+                <td class="name" th:case="${category}" th:text="${object.name}" th:switch="${object.category}"></td>
+                <td class="ea" th:case="${category}" th:text="${object.ea}" th:switch="${object.category}"></td>
+                <td class="modi" th:case="${category}" th:text="${object.modifiedAt}" th:switch="${object.category}"></td>
+                <td class="change" th:case="${category}" th:switch="${object.category}">
+                    <form th:action="@{/object}" th:object="${dto}" th:method="patch">
+                        <input type="number" id="ea" th:name="number" placeholder="수량" style="width: 50%;">
+                        <button type="submit" th:name="name" th:value="${object.name}">등록</button>
+                    </form>
+                </td>
+                <td class="button" th:case="${category}">
+                    <form th:action="@{/object}" th:method="delete">
+                        <button type="submit" th:name="name" th:value="${object.name}">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            
+        </table>
+    </div>      
+ </body>
+</html>

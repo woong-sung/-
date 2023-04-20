@@ -38,15 +38,12 @@ public class ObjectService {
         return objectList.stream().map(object ->objectMapper.objectToDto(object)).collect(Collectors.toList());
     }
 
-    public List<Dto.ObjectRes> getByCategory(String category) {
-        return objectMapper.objectListToDto(objectRepository.findAllByCategoryOrderByName(category));
-    }
-
     public void changeObjectEa(Dto.NumberInput dto) {
         objectRepository.updateEa(dto.getName(), dto.getNumber());
+        objectRepository.updateDate(dto.getName(), LocalDateTime.now());
     }
 
-    public void deleteObject(Dto.Name dto) {
-        objectRepository.deleteByName(dto.getName());
+    public void deleteObject(String name) {
+        objectRepository.deleteByName(name);
     }
 }

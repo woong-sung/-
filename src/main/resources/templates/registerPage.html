@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+    <title>재고관리 시스템</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <table style="width: 100%;">
+            <tr>
+                <th>
+                    <a th:href="@{/home}" style="font-size: 2rem;">재고관리 시스템</a>
+                </th>
+                <th>
+                    <a th:href="@{/objects}" style="font-size: 2rem;">물품 관리</a>
+                </th>
+                <th>
+                    <a th:href="@{/categories}" style="font-size: 2rem;">카테고리 관리</a>
+                </th>
+            </tr>
+        </table>    
+        
+    </nav>
+
+    <form th:action="@{/object}" th:object="${dto}" th:method="post">
+        <div>
+            <input type="text" id="name" name="name" placeholder="물품이름">
+        </div>
+        <div>
+            <input type="number" id="ea" name="ea" placeholder="개수">
+        </div>
+        <select name="category">
+            <div th:each="category : ${category}">
+                <th:block th:with="category = ${category}">
+                    <option th:value="${category}" th:text="${category}"></option>
+                </th:block>
+            </div>
+        </select>
+        <div>
+            <button>등록</button>
+        </div>
+    </form>
+ </body>
+</html>

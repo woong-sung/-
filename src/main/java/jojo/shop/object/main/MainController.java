@@ -6,12 +6,9 @@ import jojo.shop.object.category.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -19,26 +16,32 @@ import java.util.List;
 public class MainController {
     private final ObjectService objectService;
     private final CategoryService categoryService;
-    @GetMapping("/")
-    public String main(){
-        return "index";
+
+    @GetMapping("/home")
+    @ResponseStatus(HttpStatus.OK)
+    public String getMainPage(Model model) {
+        List<String> categories = categoryService.getCategoriesName();
+        model.addAttribute("category", categories);
+        List<Dto.ObjectRes> allList = objectService.getAllObject();
+        model.addAttribute("objects", allList);
+        return "/mainPage";
     }
 
-    @GetMapping("/all")
+    @GetMapping("/objects")
     @ResponseStatus(HttpStatus.OK)
-    public Dto.MainRes getMainPage(){
-        List<String> categories =  categoryService.getCategoriesName();
-        List<Dto.OrderByCategoryRes> list = new ArrayList<>();
-        for (int i = 0; i < categories.size(); i++) {
-            Dto.OrderByCategoryRes res = Dto.OrderByCategoryRes
-                    .builder()
-                    .category(categories.get(i))
-                    .objectResList(objectService.getByCategory(categories.get(i)))
-                    .build();
-            list.add(res);
-        }
-        return Dto.MainRes.builder()
-                .data(list)
-                .build();
+    public String getRegisterPage(Model model) {
+        List<String> categories = categoryService.getCategoriesName();
+        model.addAttribute("category", categories);
+        List<Dto.ObjectRes> allList = objectService.getAllObject();
+        model.addAttribute("objects", allList);
+        return "/registerPage";
+    }
+
+    @GetMapping("/categories")
+    @ResponseStatus(HttpStatus.OK)
+    public String getCategoryPage(Model model) {
+        List<String> categories = categoryService.getCategoriesName();
+        model.addAttribute("category", categories);
+        return "/categoryPage";
     }
 }

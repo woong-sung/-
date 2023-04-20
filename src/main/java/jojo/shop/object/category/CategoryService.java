@@ -4,6 +4,7 @@ import jojo.shop.object.Dto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -17,8 +18,13 @@ import java.util.stream.Collectors;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public void saveNewCategory(Dto.Name dto){
-        categoryRepository.save(Category.builder().name(dto.getName()).build());
+    public void saveNewCategory(String name){
+        if (categoryRepository.findByName(name).isPresent()) {
+            throw new ResponseStatusException(409,
+                    "Already Exists",
+                    new IllegalArgumentException());
+        }
+        categoryRepository.save(Category.builder().name(name).build());
     }
 
     public List<Dto.Name> getCategories() {
@@ -32,5 +38,9 @@ public class CategoryService {
         List<Category> list = categoryRepository.findAll();
         List<String> categoryNames = list.stream().map(category -> category.getName()).collect(Collectors.toList());
         return categoryNames;
+    }
+
+    public void deleteByName(String name) {
+        categoryRepository.deleteByName(name);
     }
 }

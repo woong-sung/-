@@ -1,0 +1,24 @@
+table, th, td{
+    border:1px solid black;
+    text-align: center;
+}
+ 
+.name{
+    width: 300px;
+}
+
+.ea{
+    width: 10%;
+}
+
+.modi{
+    width:30%;
+}
+
+.change{
+    width: 20%;
+}
+
+.button{
+    width: 10%;
+}

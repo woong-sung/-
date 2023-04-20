@@ -1,25 +1,25 @@
 package jojo.shop.object;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Dto {
     @Getter
+    @Setter
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ObjectRes {
-        private String name;
-        private int ea;
-        private LocalDateTime modifiedAt;
+        public String name;
+        public String category;
+        public int ea;
+        public LocalDateTime modifiedAt;
     }
 
     @Getter
+    @Setter
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
@@ -30,6 +30,7 @@ public class Dto {
     }
 
     @Getter
+    @Setter
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
@@ -38,6 +39,7 @@ public class Dto {
     }
 
     @Getter
+    @Setter
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
@@ -46,6 +48,7 @@ public class Dto {
     }
 
     @Getter
+    @Setter
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
@@ -55,6 +58,7 @@ public class Dto {
     }
 
     @Getter
+    @Setter
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
@@ -64,10 +68,11 @@ public class Dto {
     }
 
     @Getter
+    @Setter
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Name {
-        private String name;
+        public String name;
     }
 }

@@ -1,25 +1,28 @@
 package jojo.shop.object.category;
 
 import jojo.shop.object.Dto;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/category")
-@AllArgsConstructor
+@Controller
+@RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void postCategory(@RequestBody Dto.Name dto) {
-        categoryService.saveNewCategory(dto);
+    @PostMapping("/category")
+    public String postCategory(@ModelAttribute Dto.Name dto) {
+        categoryService.saveNewCategory(dto.getName());
+        return "redirect:/categories";
     }
 
-    @GetMapping("/all")
-    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/category/all")
     public Dto.CategoryRes getCategories(){
         return Dto.CategoryRes.builder().list(categoryService.getCategories()).build();
+    }
+
+    @DeleteMapping("/category")
+    public String deleteCategory(@RequestParam String name) {
+        categoryService.deleteByName(name);
+        return "redirect:/categories";
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +21,9 @@ public interface ObjectRepository extends JpaRepository<Object, Long> {
     Optional<Object> findByName(String name);
 
     void deleteByName(String name);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update object set modified_At =:now where name =:name", nativeQuery = true)
+    void updateDate(String name, LocalDateTime now);
 }

@@ -14,7 +14,8 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
+
   mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
+    hiddenmethod:
+      filter:
+        enable: true
